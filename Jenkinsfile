@@ -5,14 +5,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerApp = docker.build("my-app:${env.BUILD_ID}", "-f ./src/Dockerfile ./src")
+                    dockerApp = docker.build("zaineamanda/learn-jenkins:${env.BUILD_ID}", "-f ./src/Dockerfile ./src")
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                    docker.withRegistry('', 'dockerhub-credentials') {
                         dockerApp.push('latest')
                         dockerApp.push("${env.BUILD_ID}")
                     }
